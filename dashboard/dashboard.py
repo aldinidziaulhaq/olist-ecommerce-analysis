@@ -34,7 +34,6 @@ df = load_data()
 # ============================================================
 # SIDEBAR
 # ============================================================
-st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/5/5c/Olist_logo.png", width=200)
 st.sidebar.title("📦 Olist Dashboard")
 st.sidebar.markdown("---")
 
