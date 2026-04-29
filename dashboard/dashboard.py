@@ -71,9 +71,8 @@ st.markdown("---")
 # ============================================================
 # TAB
 # ============================================================
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab3, tab4 = st.tabs([
     "📈 Tren Penjualan",
-    "⭐ Kepuasan Pelanggan",
     "👥 RFM Analysis",
     "🗺️ Geospatial"
 ])
@@ -111,37 +110,6 @@ with tab1:
     plt.tight_layout()
     st.pyplot(fig)
 
-# ── TAB 2: KEPUASAN PELANGGAN ────────────────────────────
-with tab2:
-    st.subheader("⭐ Review Score per Kategori Produk")
-
-    if 'review_score' in df_filtered.columns:
-        cat_review = (df_filtered
-            .groupby('product_category_name_english', as_index=False)
-            .agg(
-                avg_score     = ('review_score', 'mean'),
-                total_order   = ('order_id',     'nunique'),
-                low_score_pct = ('review_score', lambda x: (x <= 2).sum() / len(x) * 100)
-            )
-        )
-        cat_review = cat_review.dropna(subset=['product_category_name_english'])
-        cat_review = cat_review[cat_review['total_order'] >= 30].sort_values('avg_score')
-        bottom10   = cat_review.head(10)
-
-        fig, axes = plt.subplots(1, 2, figsize=(16, 6))
-
-        colors = ['#ef5350' if s < 3.5 else '#66BB6A' for s in bottom10['avg_score']]
-        axes[0].barh(bottom10['product_category_name_english'], bottom10['avg_score'], color=colors)
-        axes[0].axvline(x=3.5, color='gray', linestyle='--', linewidth=1.5)
-        axes[0].set_title('10 Kategori Review Score Terendah', fontsize=13, fontweight='bold')
-        axes[0].set_xlabel('Rata-Rata Review Score')
-
-        axes[1].barh(bottom10['product_category_name_english'], bottom10['low_score_pct'], color='#FF7043')
-        axes[1].set_title('Persentase Order Score ≤ 2', fontsize=13, fontweight='bold')
-        axes[1].set_xlabel('Persentase (%)')
-
-        plt.tight_layout()
-        st.pyplot(fig)
 
 # ── TAB 3: RFM ANALYSIS ──────────────────────────────────
 with tab3:
