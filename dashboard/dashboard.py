@@ -47,7 +47,7 @@ year_filter = st.sidebar.multiselect(
 df_filtered = df[df['year'].isin(year_filter)]
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("**Dibuat oleh:** Nama Anda")
+st.sidebar.markdown("**Dibuat oleh:** Aldini Dziaul Haq")
 st.sidebar.markdown("**Dataset:** Olist E-Commerce")
 
 # ============================================================
